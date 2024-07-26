@@ -54,6 +54,10 @@
             top: 130px;
         }
 
+        #resetSelectionButton {
+            top: 170px;
+        }
+
         button:hover {
             background-color: #ccc;
             color: #DFD7CA;
@@ -73,6 +77,7 @@
         <button id="highlightDMButton">Deforestation Monitoring</button>
         <button id="highlightDRMButton">Deforestation Risk Mapping</button>
         <button id="highlightSSCButton">Sustainable Supply Chains </button>
+        <button id="resetSelectionButton">Reset Selection</button>
         </div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
@@ -258,7 +263,9 @@
             buttons.forEach(button => {
                 button.classList.remove('active');
             });
-            document.getElementById(activeButtonId).classList.add('active');
+            if (activeButtonId) {
+                document.getElementById(activeButtonId).classList.add('active');
+            }
         }
 
         document.getElementById('highlightBioButton').addEventListener('click', function() {
@@ -279,6 +286,11 @@
         document.getElementById('highlightSSCButton').addEventListener('click', function() {
             setActiveButton('highlightSSCButton');
             highlightCountries('SSC');
+        });
+
+        document.getElementById('resetSelectionButton').addEventListener('click', function() {
+            setActiveButton(null);
+            resetStyle();
         });
         </script>
     </body>
