@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
         <style>
         html, body, #map {
             width: 100%;
@@ -17,45 +18,51 @@
             padding: 0;
             margin: 0;
         }
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        button {
+            position: absolute;
+            right: 10px;
+            z-index: 1000;
+            background-color: #DFD7CA;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 12px;
+            color: #274A37;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Nunito Sans', sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
         #highlightBioButton {
-            position: absolute;
             top: 10px;
-            right: 10px;
-            z-index: 1000;
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
         }
+
         #highlightDMButton {
-            position: absolute;
             top: 50px;
-            right: 10px;
-            z-index: 1000;
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
         }
+
         #highlightDRMButton {
-            position: absolute;
             top: 90px;
-            right: 10px;
-            z-index: 1000;
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
         }
+
         #highlightSSCButton {
-            position: absolute;
             top: 130px;
-            right: 10px;
-            z-index: 1000;
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ccc;
+            color: #DFD7CA;
+            border-color: #274A37;
+        }
+
+        button.active {
+            background-color: #233645;
+            color: #ACACA9;
         }
         </style>
         <title></title>
@@ -232,62 +239,47 @@
                 layer.setStyle(style_PaisesConServicio_WebMercator_1_0());
             });
         }
-        function highlightBioCountries() {
+
+        function highlightCountries(property) {
+            resetStyle();
             layer_PaisesConServicio_WebMercator_1.eachLayer(function (layer) {
-                if (layer.feature.properties['Bio'] !== null) {
+                if (layer.feature.properties[property] !== null) {
                     layer.setStyle({
                         fillColor: '#DFD7CA',
                         fillOpacity: 1,
-                        color: '#274A37' // Agregando la propiedad color para el borde
-                    });
-                }
-            });
-        }
-        function highlightDMCountries() {
-            layer_PaisesConServicio_WebMercator_1.eachLayer(function (layer) {
-                if (layer.feature.properties['DM'] !== null) {
-                    layer.setStyle({
-                        fillColor: '#DFD7CA',
-                        fillOpacity: 1,
-                        color: '#274A37' // Agregando la propiedad color para el borde
-                    });
-                }
-            });
-        }
-        function highlightDRMCountries() {
-            layer_PaisesConServicio_WebMercator_1.eachLayer(function (layer) {
-                if (layer.feature.properties['DRM'] !== null) {
-                    layer.setStyle({
-                        fillColor: '#DFD7CA',
-                        fillOpacity: 1,
-                        color: '#274A37' // Agregando la propiedad color para el borde
-                    });
-                }
-            });
-        }
-        function highlightSSCCountries() {
-            layer_PaisesConServicio_WebMercator_1.eachLayer(function (layer) {
-                if (layer.feature.properties['SSC'] !== null) {
-                    layer.setStyle({
-                        fillColor: '#DFD7CA',
-                        fillOpacity: 1,
-                        color: '#274A37' // Agregando la propiedad color para el borde
+                        color: '#274A37' 
                     });
                 }
             });
         }
 
-        document.getElementById('highlightBioButton').addEventListener('mousedown', highlightBioCountries);
-        document.getElementById('highlightBioButton').addEventListener('mouseup', resetStyle);
+        function setActiveButton(activeButtonId) {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            document.getElementById(activeButtonId).classList.add('active');
+        }
 
-        document.getElementById('highlightDMButton').addEventListener('mousedown', highlightDMCountries);
-        document.getElementById('highlightDMButton').addEventListener('mouseup', resetStyle);
+        document.getElementById('highlightBioButton').addEventListener('click', function() {
+            setActiveButton('highlightBioButton');
+            highlightCountries('Bio');
+        });
 
-        document.getElementById('highlightDRMButton').addEventListener('mousedown', highlightDRMCountries);
-        document.getElementById('highlightDRMButton').addEventListener('mouseup', resetStyle);
+        document.getElementById('highlightDMButton').addEventListener('click', function() {
+            setActiveButton('highlightDMButton');
+            highlightCountries('DM');
+        });
 
-        document.getElementById('highlightSSCButton').addEventListener('mousedown', highlightSSCCountries);
-        document.getElementById('highlightSSCButton').addEventListener('mouseup', resetStyle);
+        document.getElementById('highlightDRMButton').addEventListener('click', function() {
+            setActiveButton('highlightDRMButton');
+            highlightCountries('DRM');
+        });
+
+        document.getElementById('highlightSSCButton').addEventListener('click', function() {
+            setActiveButton('highlightSSCButton');
+            highlightCountries('SSC');
+        });
         </script>
     </body>
 </html>
