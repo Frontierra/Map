@@ -1,0 +1,40 @@
+body {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+button {
+    position: absolute;
+    right: 10px;
+    z-index: 1000;
+    background-color: #DFD7CA;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 12px;
+    color: #274A37;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+#highlightBioButton {
+    top: 10px;
+}
+
+#highlightDMButton {
+    top: 50px;
+}
+
+#highlightDRMButton {
+    top: 90px;
+}
+
+#highlightSSCButton {
+    top: 130px;
+}
+
+button:hover {
+    background-color: #ccc;
+    color: #DFD7CA;
+    border-color: #274A37;
+}
